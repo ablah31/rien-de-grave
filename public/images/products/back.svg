@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1125" role="img" aria-label="Vue dos produit">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#8ba17e"/>
+      <stop offset="100%" stop-color="#3c4c41"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1125" fill="#0b1a3b"/>
+  <polygon points="0,0 560,0 410,1125 0,1125" fill="#13244b"/>
+  <polygon points="380,0 900,0 900,1125 530,1125" fill="url(#bg)"/>
+  <rect x="155" y="180" width="590" height="760" fill="#ece9e1" stroke="#dad4c8" stroke-width="14"/>
+  <text x="450" y="730" text-anchor="middle" fill="#f2efe7" font-family="Georgia, serif" font-size="42">Les paysages qu&apos;on porte</text>
+  <text x="450" y="780" text-anchor="middle" fill="#f2efe7" font-family="Georgia, serif" font-size="42">finissent par vous porter.</text>
+  <rect x="377" y="860" width="146" height="34" fill="#0b1a3b"/>
+  <text x="450" y="885" text-anchor="middle" fill="#f2efe7" font-family="Arial, sans-serif" font-size="16" letter-spacing="3">DOS</text>
+</svg>

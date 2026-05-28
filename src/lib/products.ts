@@ -1,0 +1,125 @@
+import type { Product } from "@/types/product";
+
+const sharedImages = {
+  front: "/images/products/t_shirt_arte_antwerp_men_arte_together_white.webp",
+  back: "/images/products/fm-arte-antwerp-back-graphic-t-shirt-black-ss26-143t-black-black-1.webp",
+  detail: "/images/products/SS23-103T_WHITE_2.webp",
+  worn: "/images/products/NEW-BRANDO-WHITE.webp",
+} as const;
+
+const landscapeFirstImages = {
+  front: "/images/products/SS23-103T_WHITE_2.webp",
+  back: "/images/products/fm-arte-antwerp-back-graphic-t-shirt-black-ss26-143t-black-black-1.webp",
+  detail: "/images/products/t_shirt_arte_antwerp_men_arte_together_white.webp",
+  worn: "/images/products/NEW-BRANDO-WHITE.webp",
+} as const;
+
+const productFirstImages = {
+  front: "/images/products/NEW-BRANDO-WHITE.webp",
+  back: "/images/products/t_shirt_arte_antwerp_men_arte_together_white.webp",
+  detail: "/images/products/SS23-103T_WHITE_2.webp",
+  worn: "/images/products/fm-arte-antwerp-back-graphic-t-shirt-black-ss26-143t-black-black-1.webp",
+} as const;
+
+export const products: Product[] = [
+  {
+    id: "1",
+    chapterNumber: "01",
+    name: "Le Depart",
+    slug: "le-depart",
+    subtitle: "T-shirt ecru - paysage desertique",
+    description: "T-shirt epais a coupe legerement oversize, pense comme une ouverture de film.",
+    quote: "Parce qu'on vient tous de quelque part.",
+    price: 65,
+    color: "Ecru",
+    material: "100% coton",
+    weight: "240g",
+    fit: "Oversize",
+    madeIn: "Imprime en France",
+    images: landscapeFirstImages,
+    sizes: ["S", "M", "L", "XL"],
+    isActive: true,
+  },
+  {
+    id: "2",
+    chapterNumber: "02",
+    name: "La Route",
+    slug: "la-route",
+    subtitle: "T-shirt noir - route de montagne",
+    description: "Coupe droite structuree, esprit route nocturne et lumiere de Taxi Driver.",
+    quote: "Un lieu continue de marcher en nous.",
+    price: 65,
+    color: "Noir",
+    material: "100% coton",
+    weight: "240g",
+    fit: "Regular",
+    madeIn: "Imprime en France",
+    images: productFirstImages,
+    sizes: ["S", "M", "L", "XL"],
+    isActive: true,
+  },
+  {
+    id: "3",
+    chapterNumber: "03",
+    name: "Le Silence",
+    slug: "le-silence",
+    subtitle: "T-shirt sable - horizon brumeux",
+    description: "Piece lourde et sobre, grain brut dans l'esprit de Raging Bull.",
+    quote: "Le silence aussi laisse des traces.",
+    price: 65,
+    color: "Sable",
+    material: "100% coton",
+    weight: "240g",
+    fit: "Oversize",
+    madeIn: "Imprime en France",
+    images: sharedImages,
+    sizes: ["S", "M", "L", "XL"],
+    isActive: true,
+  },
+  {
+    id: "4",
+    chapterNumber: "04",
+    name: "Quelque Part",
+    slug: "quelque-part",
+    subtitle: "T-shirt brun - vallee minerale",
+    description: "Volume controle, detail precis, tension elegante facon Casino.",
+    quote: "Quelque part, ce n'est jamais loin.",
+    price: 65,
+    color: "Brun",
+    material: "100% coton",
+    weight: "240g",
+    fit: "Regular",
+    madeIn: "Imprime en France",
+    images: landscapeFirstImages,
+    sizes: ["S", "M", "L", "XL"],
+    isActive: true,
+  },
+  {
+    id: "5",
+    chapterNumber: "05",
+    name: "La Nuit Claire",
+    slug: "la-nuit-claire",
+    subtitle: "T-shirt blanc casse - paysage nocturne",
+    description: "Maille dense, coupe ample, errance tardive inspiree par After Hours.",
+    quote: "Rien de grave. Juste un souvenir qui reste.",
+    price: 65,
+    color: "Blanc casse",
+    material: "100% coton",
+    weight: "240g",
+    fit: "Oversize",
+    madeIn: "Imprime en France",
+    images: productFirstImages,
+    sizes: ["S", "M", "L", "XL"],
+    isActive: true,
+  },
+];
+
+export const collectionTitle = "Collection I - Paysages interieurs";
+
+export function getActiveProducts() {
+  return products.filter((product) => product.isActive !== false);
+}
+
+export function getProductBySlug(slug: string) {
+  return getActiveProducts().find((product) => product.slug === slug);
+}

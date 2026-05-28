@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1125" role="img" aria-label="Vue face produit">
+  <rect width="900" height="1125" fill="#0b1a3b"/>
+  <rect x="145" y="130" width="610" height="840" fill="#d9d9d9" stroke="#b6b6b6" stroke-width="10"/>
+  <path d="M290 360 L610 360 L680 430 L680 820 L220 820 L220 430 Z" fill="#0d0d0d"/>
+  <path d="M380 360 C390 300 510 300 520 360 Z" fill="#111"/>
+  <text x="450" y="510" text-anchor="middle" fill="#d0d0d0" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">RIEN DE GRAVE</text>
+  <rect x="365" y="845" width="170" height="34" fill="#0b1a3b"/>
+  <text x="450" y="869" text-anchor="middle" fill="#f2efe7" font-family="Arial, sans-serif" font-size="16" letter-spacing="3">FACE</text>
+</svg>

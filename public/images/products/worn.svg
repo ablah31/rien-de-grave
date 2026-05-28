@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1125" role="img" aria-label="Photo portee produit">
+  <defs>
+    <linearGradient id="sunset" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f0b277"/>
+      <stop offset="40%" stop-color="#b25d49"/>
+      <stop offset="100%" stop-color="#0b1a3b"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1125" fill="url(#sunset)"/>
+  <path d="M0 690 C210 610 380 770 580 700 C700 655 780 705 900 665 L900 1125 L0 1125 Z" fill="#101c3e" opacity="0.88"/>
+  <text x="450" y="470" text-anchor="middle" fill="#f2efe7" font-family="Georgia, serif" font-size="62">Le silence est une</text>
+  <text x="450" y="540" text-anchor="middle" fill="#f2efe7" font-family="Georgia, serif" font-size="62">reponse que le bruit</text>
+  <text x="450" y="610" text-anchor="middle" fill="#f2efe7" font-family="Georgia, serif" font-size="62">ne comprend pas.</text>
+  <text x="450" y="685" text-anchor="middle" fill="#f2efe7" opacity="0.8" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">COLLECTION 01, PIECE 03</text>
+  <rect x="330" y="870" width="240" height="34" fill="#0b1a3b"/>
+  <text x="450" y="894" text-anchor="middle" fill="#f2efe7" font-family="Arial, sans-serif" font-size="16" letter-spacing="3">WORN</text>
+</svg>
