@@ -28,7 +28,6 @@ export async function GET() {
     },
   };
 
-  // 1) Test direct de la connexion Postgres via pg
   try {
     const { Pool } = await import("pg");
     const raw = process.env.POSTGRES_URL || process.env.DATABASE_URL || "";
@@ -56,7 +55,6 @@ export async function GET() {
     };
   }
 
-  // 2) Test init Payload
   try {
     const { getPayloadClient } = await import("@/lib/payload");
     const payload = await getPayloadClient();
@@ -67,7 +65,7 @@ export async function GET() {
       ok: false,
       name: (error as Error)?.name,
       message: (error as Error)?.message,
-      stack: (error as Error)?.stack?.split("\n").slice(0, 6),
+      stack: (error as Error)?.stack?.split("\n").slice(0, 8),
     };
   }
 
