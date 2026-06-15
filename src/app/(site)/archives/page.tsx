@@ -6,7 +6,7 @@ const fallbackArchiveBlocks = [
   "Images, fragments et paysages autour de RIEN DE GRAVE.",
   "Des vetements comme des souvenirs.",
   "Une piece. Un paysage. Une phrase au dos.",
-  "Futures collections, campagnes, notes de voyage.",
+  "Coulisses, campagnes, notes de voyage.",
 ];
 
 export default async function ArchivesPage() {

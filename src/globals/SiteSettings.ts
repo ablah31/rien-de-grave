@@ -11,7 +11,7 @@ export const SiteSettings: GlobalConfig = {
       name: "collectionTitle",
       type: "text",
       required: true,
-      defaultValue: "Collection I - Paysages interieurs",
+      defaultValue: "Paysages interieurs",
     },
     {
       name: "archivesTitle",

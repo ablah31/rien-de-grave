@@ -15,8 +15,8 @@ export default async function CollectionPage() {
         </p>
         <h1 className="font-serif text-4xl leading-none md:text-6xl">{collectionTitle}</h1>
         <p className="max-w-2xl text-sm leading-6 text-brand-cream/70 md:text-base md:text-brand-cream/80">
-          Cinq pieces. Cinq paysages. Cinq phrases. Une premiere collection pensee comme
-          une archive.
+          Cinq pieces. Cinq paysages. Cinq phrases. La collection en vente, pensee comme une
+          archive.
         </p>
       </header>
 

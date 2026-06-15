@@ -25,7 +25,7 @@ export default async function HomePage() {
             Univers
           </p>
           <h2 className="font-serif text-4xl leading-[1.05] md:text-6xl">
-            Une collection pensee comme une archive.
+            La collection, pensee comme une archive.
           </h2>
         </div>
 

@@ -21,7 +21,7 @@ const productFirstImages = {
   worn: "/images/products/fm-arte-antwerp-back-graphic-t-shirt-black-ss26-143t-black-black-1.webp",
 } as const;
 
-export const fallbackCollectionTitle = "Collection I - Paysages interieurs";
+export const fallbackCollectionTitle = "Paysages interieurs";
 
 export const fallbackProducts: Product[] = [
   {

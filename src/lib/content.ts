@@ -2,7 +2,7 @@ import type { Home, Manifesto, SiteSetting } from "@/payload-types";
 import { resolveMedia } from "@/lib/map-product";
 
 export const defaultHomeContent = {
-  heroEyebrow: "Collection I - quelque part",
+  heroEyebrow: "Quelque part",
   heroTitle: "Couture d'ailleurs.",
   heroSubtitle:
     "Une image au dos. Une phrase qu'on garde. Une piece pensee comme une archive de voyage.",
@@ -10,7 +10,7 @@ export const defaultHomeContent = {
   heroArtImage: "/images/Dos fichier 2 Plus grand.png",
   heroArtQuote: "Parce qu'on vient tous de quelque part.",
   heroArtLabel: "Dos imprime",
-  dropEyebrow: "Premier drop",
+  dropEyebrow: "En vente",
   dropTitle: "Des paysages au dos, pour ceux qui portent encore un lieu en eux.",
   ctaLabel: "Decouvrir la collection",
   ctaHref: "/collection",
@@ -31,7 +31,7 @@ export const defaultHomeContent = {
       text: "Un t-shirt epais, sobre, imprime en France, a porter comme un fragment.",
     },
   ],
-  collectionSectionEyebrow: "Collection I - Paysages interieurs",
+  collectionSectionEyebrow: "Paysages interieurs",
   collectionSectionTitle: "Cinq chapitres. Pas une gamme.",
   collectionSectionText:
     "Chaque produit est traite comme un chapitre: un numero, un nom, une couleur, une image au dos et une phrase qui donne le ton.",
@@ -116,7 +116,7 @@ export function mapManifestoContent(manifesto: Manifesto | null) {
 
 export function mapSiteSettings(settings: SiteSetting | null) {
   return {
-    collectionTitle: settings?.collectionTitle ?? "Collection I - Paysages interieurs",
+    collectionTitle: settings?.collectionTitle ?? "Paysages interieurs",
     archivesTitle: settings?.archivesTitle ?? "Archives",
     archivesIntro:
       settings?.archivesIntro ??

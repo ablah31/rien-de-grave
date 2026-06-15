@@ -192,21 +192,27 @@ export async function seedDatabase(payload: Payload) {
     "Images, fragments et paysages autour de RIEN DE GRAVE.",
     "Des vetements comme des souvenirs.",
     "Une piece. Un paysage. Une phrase au dos.",
-    "Futures collections, campagnes, notes de voyage.",
+    "Coulisses, campagnes, notes de voyage.",
   ];
 
   for (const [index, text] of archiveTexts.entries()) {
     const existing = await payload.find({
       collection: "archives",
       where: {
-        text: {
-          equals: text,
+        order: {
+          equals: index,
         },
       },
       limit: 1,
     });
 
-    if (!existing.docs[0]) {
+    if (existing.docs[0]) {
+      await payload.update({
+        collection: "archives",
+        id: existing.docs[0].id,
+        data: { text, order: index },
+      });
+    } else {
       await payload.create({
         collection: "archives",
         data: {
@@ -220,7 +226,7 @@ export async function seedDatabase(payload: Payload) {
   await payload.updateGlobal({
     slug: "home",
     data: {
-      heroEyebrow: "Collection I - quelque part",
+      heroEyebrow: "Quelque part",
       heroTitle: "Couture d'ailleurs.",
       heroSubtitle:
         "Une image au dos. Une phrase qu'on garde. Une piece pensee comme une archive de voyage.",
@@ -228,7 +234,7 @@ export async function seedDatabase(payload: Payload) {
       heroArtImage: heroImageId,
       heroArtQuote: "Parce qu'on vient tous de quelque part.",
       heroArtLabel: "Dos imprime",
-      dropEyebrow: "Premier drop",
+      dropEyebrow: "En vente",
       dropTitle: "Des paysages au dos, pour ceux qui portent encore un lieu en eux.",
       ctaLabel: "Decouvrir la collection",
       ctaHref: "/collection",
@@ -249,7 +255,7 @@ export async function seedDatabase(payload: Payload) {
           text: "Un t-shirt epais, sobre, imprime en France, a porter comme un fragment.",
         },
       ],
-      collectionSectionEyebrow: "Collection I - Paysages interieurs",
+      collectionSectionEyebrow: "Paysages interieurs",
       collectionSectionTitle: "Cinq chapitres. Pas une gamme.",
       collectionSectionText:
         "Chaque produit est traite comme un chapitre: un numero, un nom, une couleur, une image au dos et une phrase qui donne le ton.",
@@ -287,7 +293,7 @@ export async function seedDatabase(payload: Payload) {
   await payload.updateGlobal({
     slug: "site-settings",
     data: {
-      collectionTitle: "Collection I - Paysages interieurs",
+      collectionTitle: "Paysages interieurs",
       archivesTitle: "Archives",
       archivesIntro: "Images, fragments et paysages autour de RIEN DE GRAVE.",
       siteDescription: "Streetwear francais poetique et cinematographique.",

@@ -11,7 +11,7 @@ export const Home: GlobalConfig = {
       name: "heroEyebrow",
       type: "text",
       required: true,
-      defaultValue: "Collection I - quelque part",
+      defaultValue: "Quelque part",
     },
     {
       name: "heroTitle",
@@ -52,7 +52,7 @@ export const Home: GlobalConfig = {
       name: "dropEyebrow",
       type: "text",
       required: true,
-      defaultValue: "Premier drop",
+      defaultValue: "En vente",
     },
     {
       name: "dropTitle",
@@ -87,7 +87,7 @@ export const Home: GlobalConfig = {
       name: "collectionSectionEyebrow",
       type: "text",
       required: true,
-      defaultValue: "Collection I - Paysages interieurs",
+      defaultValue: "Paysages interieurs",
     },
     {
       name: "collectionSectionTitle",
