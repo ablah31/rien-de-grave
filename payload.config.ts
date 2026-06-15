@@ -1,6 +1,6 @@
 import path from "path";
 import { fileURLToPath } from "url";
-import { vercelPostgresAdapter } from "@payloadcms/db-vercel-postgres";
+import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { buildConfig } from "payload";
@@ -31,6 +31,9 @@ function normalizePostgresConnectionString(connectionString: string) {
       url.searchParams.set("uselibpqcompat", "true");
     }
 
+    // channel_binding peut ralentir ou bloquer node-pg en build local.
+    url.searchParams.delete("channel_binding");
+
     return url.toString();
   } catch {
     return connectionString;
@@ -46,6 +49,7 @@ export default buildConfig({
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname, "src"),
+      importMapFile: path.resolve(dirname, "src/app/(payload)/admin/importMap.js"),
     },
   },
   collections: [Users, Media, Products, Orders, Archives],
@@ -56,10 +60,12 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, "src/payload-types.ts"),
   },
-  db: vercelPostgresAdapter({
+  db: postgresAdapter({
     pool: {
       connectionString,
-      max: 1,
+      max: 10,
+      connectionTimeoutMillis: 15_000,
+      idleTimeoutMillis: 10_000,
     },
     push: process.env.NODE_ENV !== "production",
   }),

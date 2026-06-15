@@ -5,17 +5,19 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "payload generate:importmap && payload migrate && next build",
+    "build": "payload generate:importmap --force && payload migrate && next build",
     "start": "next start",
     "lint": "eslint",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
-    "seed": "tsx --env-file=.env.local src/seed/run.ts"
+    "seed": "tsx --env-file=.env.local src/seed/run.ts",
+    "test:db": "node --env-file=.env.local scripts/test-neon.mjs",
+    "test:db:payload": "NODE_ENV=production tsx --env-file=.env.local scripts/test-payload.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
-    "@payloadcms/db-vercel-postgres": "^3.85.1",
+    "@payloadcms/db-postgres": "^3.85.1",
     "@payloadcms/next": "^3.85.1",
     "@payloadcms/richtext-lexical": "^3.85.1",
     "@payloadcms/storage-vercel-blob": "^3.85.1",

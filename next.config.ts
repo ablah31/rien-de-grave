@@ -2,6 +2,10 @@ import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Evite 11 connexions Neon simultanees pendant le build.
+    staticGenerationMaxConcurrency: 1,
+  },
   images: {
     remotePatterns: [
       {

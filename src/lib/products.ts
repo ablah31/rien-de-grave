@@ -6,57 +6,90 @@ import { fallbackProducts, fallbackCollectionTitle } from "@/lib/products-fallba
 
 export const collectionTitle = fallbackCollectionTitle;
 
+const activeFallbackProducts = () =>
+  fallbackProducts.filter((product) => product.isActive !== false);
+
+function isProductionBuild() {
+  return process.env.NEXT_PHASE === "phase-production-build";
+}
+
+async function withPayloadQuery<T>(label: string, query: () => Promise<T>, fallback: T): Promise<T> {
+  try {
+    return await query();
+  } catch (error) {
+    if (isProductionBuild()) {
+      console.warn(`[build] ${label} indisponible, utilisation du fallback.`);
+      return fallback;
+    }
+    throw error;
+  }
+}
+
 export async function getActiveProducts(): Promise<Product[]> {
+  const fallback = activeFallbackProducts();
   if (!isPayloadConfigured()) {
-    return fallbackProducts.filter((product) => product.isActive !== false);
+    return fallback;
   }
 
-  const payload = await getPayloadClient();
-  const result = await payload.find({
-    collection: "products",
-    where: {
-      isActive: {
-        equals: true,
-      },
+  return withPayloadQuery(
+    "produits",
+    async () => {
+      const payload = await getPayloadClient();
+      const result = await payload.find({
+        collection: "products",
+        where: {
+          isActive: {
+            equals: true,
+          },
+        },
+        sort: "chapterNumber",
+        depth: 2,
+        limit: 100,
+      });
+
+      if (result.docs.length === 0) {
+        return fallback;
+      }
+
+      return result.docs.map((doc) => mapPayloadProduct(doc as PayloadProduct));
     },
-    sort: "chapterNumber",
-    depth: 2,
-    limit: 100,
-  });
-
-  if (result.docs.length === 0) {
-    return fallbackProducts.filter((product) => product.isActive !== false);
-  }
-
-  return result.docs.map((doc) => mapPayloadProduct(doc as PayloadProduct));
+    fallback,
+  );
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | undefined> {
+  const fallback = fallbackProducts.find((product) => product.slug === slug);
   if (!isPayloadConfigured()) {
-    return fallbackProducts.find((product) => product.slug === slug);
+    return fallback;
   }
 
-  const payload = await getPayloadClient();
-  const result = await payload.find({
-    collection: "products",
-    where: {
-      slug: {
-        equals: slug,
-      },
-      isActive: {
-        equals: true,
-      },
+  return withPayloadQuery(
+    `produit ${slug}`,
+    async () => {
+      const payload = await getPayloadClient();
+      const result = await payload.find({
+        collection: "products",
+        where: {
+          slug: {
+            equals: slug,
+          },
+          isActive: {
+            equals: true,
+          },
+        },
+        depth: 2,
+        limit: 1,
+      });
+
+      const doc = result.docs[0];
+      if (!doc) {
+        return fallback;
+      }
+
+      return mapPayloadProduct(doc as PayloadProduct);
     },
-    depth: 2,
-    limit: 1,
-  });
-
-  const doc = result.docs[0];
-  if (!doc) {
-    return fallbackProducts.find((product) => product.slug === slug);
-  }
-
-  return mapPayloadProduct(doc as PayloadProduct);
+    fallback,
+  );
 }
 
 export async function getCollectionTitle(): Promise<string> {
@@ -64,13 +97,19 @@ export async function getCollectionTitle(): Promise<string> {
     return fallbackCollectionTitle;
   }
 
-  const payload = await getPayloadClient();
-  const settings = await payload.findGlobal({
-    slug: "site-settings",
-    depth: 0,
-  });
+  return withPayloadQuery(
+    "titre collection",
+    async () => {
+      const payload = await getPayloadClient();
+      const settings = await payload.findGlobal({
+        slug: "site-settings",
+        depth: 0,
+      });
 
-  return settings.collectionTitle || fallbackCollectionTitle;
+      return settings.collectionTitle || fallbackCollectionTitle;
+    },
+    fallbackCollectionTitle,
+  );
 }
 
 export async function getHomeContent(): Promise<Home | null> {
@@ -78,11 +117,17 @@ export async function getHomeContent(): Promise<Home | null> {
     return null;
   }
 
-  const payload = await getPayloadClient();
-  return payload.findGlobal({
-    slug: "home",
-    depth: 2,
-  }) as Promise<Home>;
+  return withPayloadQuery(
+    "contenu home",
+    async () => {
+      const payload = await getPayloadClient();
+      return payload.findGlobal({
+        slug: "home",
+        depth: 2,
+      }) as Promise<Home>;
+    },
+    null,
+  );
 }
 
 export async function getManifestoContent(): Promise<Manifesto | null> {
@@ -90,11 +135,17 @@ export async function getManifestoContent(): Promise<Manifesto | null> {
     return null;
   }
 
-  const payload = await getPayloadClient();
-  return payload.findGlobal({
-    slug: "manifesto",
-    depth: 0,
-  }) as Promise<Manifesto>;
+  return withPayloadQuery(
+    "manifeste",
+    async () => {
+      const payload = await getPayloadClient();
+      return payload.findGlobal({
+        slug: "manifesto",
+        depth: 0,
+      }) as Promise<Manifesto>;
+    },
+    null,
+  );
 }
 
 export async function getSiteSettings(): Promise<SiteSetting | null> {
@@ -102,11 +153,17 @@ export async function getSiteSettings(): Promise<SiteSetting | null> {
     return null;
   }
 
-  const payload = await getPayloadClient();
-  return payload.findGlobal({
-    slug: "site-settings",
-    depth: 0,
-  }) as Promise<SiteSetting>;
+  return withPayloadQuery(
+    "parametres site",
+    async () => {
+      const payload = await getPayloadClient();
+      return payload.findGlobal({
+        slug: "site-settings",
+        depth: 0,
+      }) as Promise<SiteSetting>;
+    },
+    null,
+  );
 }
 
 export async function getArchives() {
@@ -114,13 +171,19 @@ export async function getArchives() {
     return [];
   }
 
-  const payload = await getPayloadClient();
-  const result = await payload.find({
-    collection: "archives",
-    sort: "order",
-    depth: 1,
-    limit: 100,
-  });
+  return withPayloadQuery(
+    "archives",
+    async () => {
+      const payload = await getPayloadClient();
+      const result = await payload.find({
+        collection: "archives",
+        sort: "order",
+        depth: 1,
+        limit: 100,
+      });
 
-  return result.docs as Archive[];
+      return result.docs as Archive[];
+    },
+    [],
+  );
 }
