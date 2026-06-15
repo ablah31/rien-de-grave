@@ -1,6 +1,7 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import type { Payload } from "payload";
+import { ACTIVE_PRODUCT_SLUG } from "@/lib/catalog";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -151,6 +152,7 @@ export async function seedDatabase(payload: Payload) {
   );
 
   for (const product of productSeedData) {
+    const isActive = product.slug === ACTIVE_PRODUCT_SLUG;
     const existing = await payload.find({
       collection: "products",
       where: {
@@ -162,6 +164,11 @@ export async function seedDatabase(payload: Payload) {
     });
 
     if (existing.docs[0]) {
+      await payload.update({
+        collection: "products",
+        id: existing.docs[0].id,
+        data: { isActive },
+      });
       continue;
     }
 
@@ -176,7 +183,7 @@ export async function seedDatabase(payload: Payload) {
       collection: "products",
       data: {
         ...product,
-        isActive: true,
+        isActive,
         sizes: ["S", "M", "L", "XL"],
         images: {
           front,
@@ -236,7 +243,7 @@ export async function seedDatabase(payload: Payload) {
       heroArtLabel: "Dos imprime",
       dropEyebrow: "En vente",
       dropTitle: "Des paysages au dos, pour ceux qui portent encore un lieu en eux.",
-      ctaLabel: "Decouvrir la collection",
+      ctaLabel: "Decouvrir la piece",
       ctaHref: "/collection",
       universeBlocks: [
         {
@@ -256,12 +263,12 @@ export async function seedDatabase(payload: Payload) {
         },
       ],
       collectionSectionEyebrow: "Paysages interieurs",
-      collectionSectionTitle: "Cinq chapitres. Pas une gamme.",
+      collectionSectionTitle: "Une piece. Pas une gamme.",
       collectionSectionText:
-        "Chaque produit est traite comme un chapitre: un numero, un nom, une couleur, une image au dos et une phrase qui donne le ton.",
+        "Un numero, un nom, une couleur, une image au dos et une phrase qui donne le ton.",
       collectionSectionImage: collectionImageId,
-      collectionPreviewEyebrow: "Les pieces",
-      collectionPreviewTitle: "Trois chapitres pour entrer dans l'univers.",
+      collectionPreviewEyebrow: "La piece",
+      collectionPreviewTitle: "Le chapitre en vente.",
       collectionPreviewText:
         "Chaque fiche produit prolonge le recit: visuel, citation, coupe, matiere et details d'atelier.",
       manifestoPreviewEyebrow: "Manifeste",

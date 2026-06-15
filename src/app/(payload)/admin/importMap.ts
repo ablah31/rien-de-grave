@@ -20,7 +20,6 @@ export const importMap = {
   "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler":
     VercelBlobClientUploadHandler,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards,
-  "@payloadcms/ui/rsc#CollectionCards": CollectionCards,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField,
   "@payloadcms/richtext-lexical/rsc#LexicalDiffComponent": LexicalDiffComponent,

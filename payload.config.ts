@@ -1,6 +1,6 @@
 import path from "path";
 import { fileURLToPath } from "url";
-import { postgresAdapter } from "@payloadcms/db-postgres";
+import { vercelPostgresAdapter } from "@payloadcms/db-vercel-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { buildConfig } from "payload";
@@ -14,6 +14,7 @@ import { Users } from "./src/collections/Users";
 import { Home } from "./src/globals/Home";
 import { Manifesto } from "./src/globals/Manifesto";
 import { SiteSettings } from "./src/globals/SiteSettings";
+import { getServerSideURL } from "./src/lib/server-url";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -49,14 +50,16 @@ export default buildConfig({
   },
   collections: [Users, Media, Products, Orders, Archives],
   globals: [Home, Manifesto, SiteSettings],
+  cors: [getServerSideURL()].filter(Boolean),
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "dev-secret-change-me",
   typescript: {
     outputFile: path.resolve(dirname, "src/payload-types.ts"),
   },
-  db: postgresAdapter({
+  db: vercelPostgresAdapter({
     pool: {
       connectionString,
+      max: 1,
     },
     push: process.env.NODE_ENV !== "production",
   }),

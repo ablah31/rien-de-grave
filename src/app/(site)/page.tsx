@@ -11,7 +11,14 @@ import { fallbackProducts } from "@/lib/products-fallback";
 export default async function HomePage() {
   const [home, products] = await Promise.all([getHomeContent(), getActiveProducts()]);
   const homeContent = mapHomeContent(home);
-  const chapterNames = (products.length > 0 ? products : fallbackProducts).map(
+  const displayProducts = products.length > 0 ? products : fallbackProducts;
+  const collectionHref =
+    displayProducts.length === 1
+      ? `/collection/${displayProducts[0].slug}`
+      : "/collection";
+  const collectionLabel =
+    displayProducts.length === 1 ? "Voir la piece" : "Voir la collection";
+  const chapterNames = displayProducts.map(
     (product) => `${product.chapterNumber} - ${product.name}`,
   );
 
@@ -74,10 +81,10 @@ export default async function HomePage() {
             ))}
           </div>
           <Link
-            href="/collection"
+            href={collectionHref}
             className="mt-8 inline-flex w-fit border-b border-white/40 pb-1 text-[11px] uppercase tracking-[0.22em] text-brand-cream/85 transition-colors hover:text-brand-cream"
           >
-            Voir la collection
+            {collectionLabel}
           </Link>
         </div>
       </section>

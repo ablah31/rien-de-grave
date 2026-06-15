@@ -15,12 +15,17 @@ export default async function CollectionPage() {
         </p>
         <h1 className="font-serif text-4xl leading-none md:text-6xl">{collectionTitle}</h1>
         <p className="max-w-2xl text-sm leading-6 text-brand-cream/70 md:text-base md:text-brand-cream/80">
-          Cinq pieces. Cinq paysages. Cinq phrases. La collection en vente, pensee comme une
-          archive.
+          Un paysage. Une phrase. Une piece en vente, pensee comme une archive.
         </p>
       </header>
 
-      <div className="grid gap-8 md:grid-cols-2 md:gap-6 xl:grid-cols-3">
+      <div
+        className={
+          products.length === 1
+            ? "mx-auto max-w-md"
+            : "grid gap-8 md:grid-cols-2 md:gap-6 xl:grid-cols-3"
+        }
+      >
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

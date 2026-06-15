@@ -12,7 +12,7 @@ export const defaultHomeContent = {
   heroArtLabel: "Dos imprime",
   dropEyebrow: "En vente",
   dropTitle: "Des paysages au dos, pour ceux qui portent encore un lieu en eux.",
-  ctaLabel: "Decouvrir la collection",
+  ctaLabel: "Decouvrir la piece",
   ctaHref: "/collection",
   universeBlocks: [
     {
@@ -32,12 +32,12 @@ export const defaultHomeContent = {
     },
   ],
   collectionSectionEyebrow: "Paysages interieurs",
-  collectionSectionTitle: "Cinq chapitres. Pas une gamme.",
+  collectionSectionTitle: "Une piece. Pas une gamme.",
   collectionSectionText:
-    "Chaque produit est traite comme un chapitre: un numero, un nom, une couleur, une image au dos et une phrase qui donne le ton.",
+    "Un numero, un nom, une couleur, une image au dos et une phrase qui donne le ton.",
   collectionSectionImage: "/images/products/SS23-103T_WHITE_2.webp",
-  collectionPreviewEyebrow: "Les pieces",
-  collectionPreviewTitle: "Trois chapitres pour entrer dans l'univers.",
+  collectionPreviewEyebrow: "La piece",
+  collectionPreviewTitle: "Le chapitre en vente.",
   collectionPreviewText:
     "Chaque fiche produit prolonge le recit: visuel, citation, coupe, matiere et details d'atelier.",
   manifestoPreviewEyebrow: "Manifeste",

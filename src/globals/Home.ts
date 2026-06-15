@@ -64,7 +64,7 @@ export const Home: GlobalConfig = {
       name: "ctaLabel",
       type: "text",
       required: true,
-      defaultValue: "Decouvrir la collection",
+      defaultValue: "Decouvrir la piece",
     },
     {
       name: "ctaHref",
@@ -93,7 +93,7 @@ export const Home: GlobalConfig = {
       name: "collectionSectionTitle",
       type: "text",
       required: true,
-      defaultValue: "Cinq chapitres. Pas une gamme.",
+      defaultValue: "Une piece. Pas une gamme.",
     },
     {
       name: "collectionSectionText",
@@ -109,13 +109,13 @@ export const Home: GlobalConfig = {
       name: "collectionPreviewEyebrow",
       type: "text",
       required: true,
-      defaultValue: "Les pieces",
+      defaultValue: "La piece",
     },
     {
       name: "collectionPreviewTitle",
       type: "text",
       required: true,
-      defaultValue: "Trois chapitres pour entrer dans l'univers.",
+      defaultValue: "Le chapitre en vente.",
     },
     {
       name: "collectionPreviewText",

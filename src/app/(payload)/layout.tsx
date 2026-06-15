@@ -7,6 +7,8 @@ import type { ReactNode } from "react";
 import "./custom.scss";
 import { importMap } from "./admin/importMap";
 
+export const runtime = "nodejs";
+
 type Args = {
   children: ReactNode;
 };

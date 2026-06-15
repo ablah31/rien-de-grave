@@ -9,7 +9,10 @@ interface CollectionPreviewProps {
 }
 
 export function CollectionPreview({ products, content }: CollectionPreviewProps) {
-  const items = products.slice(0, 3);
+  const items = products.slice(0, products.length === 1 ? 1 : 3);
+  const collectionHref =
+    products.length === 1 ? `/collection/${products[0].slug}` : "/collection";
+  const collectionLabel = products.length === 1 ? "Voir la piece" : "Toute la collection";
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:space-y-10 md:px-8 md:py-24">
@@ -26,13 +29,19 @@ export function CollectionPreview({ products, content }: CollectionPreviewProps)
           </p>
         </div>
         <Link
-          href="/collection"
+          href={collectionHref}
           className="w-fit border-b border-white/40 pb-1 text-[11px] uppercase tracking-[0.2em] text-brand-cream/80 hover:text-brand-cream"
         >
-          Toute la collection
+          {collectionLabel}
         </Link>
       </div>
-      <div className="grid gap-8 md:grid-cols-2 md:gap-6 xl:grid-cols-3">
+      <div
+        className={
+          items.length === 1
+            ? "mx-auto max-w-md"
+            : "grid gap-8 md:grid-cols-2 md:gap-6 xl:grid-cols-3"
+        }
+      >
         {items.map((product) => (
           <div key={product.id} className="home-reveal">
             <ProductCard product={product} />
