@@ -6,10 +6,15 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Logo } from "@/components/brand/Logo";
+import type { HomeContent } from "@/lib/content";
 
 gsap.registerPlugin(useGSAP);
 
-export function HeroSection() {
+interface HeroSectionProps {
+  content: HomeContent;
+}
+
+export function HeroSection({ content }: HeroSectionProps) {
   const scope = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -43,7 +48,7 @@ export function HeroSection() {
     <section ref={scope} className="relative min-h-[96vh] overflow-hidden border-b border-white/10">
       <div className="hero-bg home-parallax absolute inset-0">
         <Image
-          src="/images/Dos fichier 2 Plus grand.png"
+          src={content.heroBackgroundImage}
           alt="Visuel dos RIEN DE GRAVE"
           fill
           priority
@@ -62,14 +67,13 @@ export function HeroSection() {
           </div>
           <div className="space-y-4">
             <p className="hero-line text-[10px] uppercase tracking-[0.32em] text-brand-sand md:text-xs">
-              Collection I - quelque part
+              {content.heroEyebrow}
             </p>
             <h1 className="hero-line max-w-xl font-serif text-5xl leading-[0.92] text-brand-cream md:text-7xl">
-              Couture d&apos;ailleurs.
+              {content.heroTitle}
             </h1>
             <p className="hero-line max-w-md text-sm leading-7 text-brand-cream/74 md:text-base">
-              Une image au dos. Une phrase qu&apos;on garde. Une piece pensee comme une
-              archive de voyage.
+              {content.heroSubtitle}
             </p>
           </div>
           <div className="hero-mark hidden h-px w-40 bg-brand-sand/70 md:block" />
@@ -78,7 +82,7 @@ export function HeroSection() {
         <div className="hero-art relative mx-auto w-full max-w-[560px] self-end md:mx-0 md:justify-self-end">
           <div className="relative aspect-[5/4] overflow-hidden border border-brand-cream/20 bg-brand-black p-2 shadow-2xl shadow-black/45 md:p-3">
             <Image
-              src="/images/Dos fichier 2 Plus grand.png"
+              src={content.heroArtImage}
               alt="Dos de t-shirt RIEN DE GRAVE"
               fill
               priority
@@ -88,10 +92,10 @@ export function HeroSection() {
             <div className="absolute inset-2 border border-white/10 md:inset-3" />
             <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-5">
               <p className="max-w-[220px] font-serif text-xl leading-tight text-brand-cream drop-shadow md:text-2xl">
-                Parce qu&apos;on vient tous de quelque part.
+                {content.heroArtQuote}
               </p>
               <span className="hidden text-[10px] uppercase tracking-[0.28em] text-brand-cream/80 md:block">
-                Dos imprime
+                {content.heroArtLabel}
               </span>
             </div>
           </div>
@@ -101,18 +105,18 @@ export function HeroSection() {
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <div className="space-y-3">
               <p className="text-[10px] uppercase tracking-[0.28em] text-brand-gray">
-                Premier drop
+                {content.dropEyebrow}
               </p>
               <p className="max-w-2xl font-serif text-2xl leading-tight text-brand-cream md:text-4xl">
-                Des paysages au dos, pour ceux qui portent encore un lieu en eux.
+                {content.dropTitle}
               </p>
             </div>
             <div className="space-y-3">
               <Link
-                href="/collection"
+                href={content.ctaHref}
                 className="inline-flex h-11 items-center border border-brand-cream bg-brand-cream px-5 text-[11px] font-medium uppercase tracking-[0.22em] text-[#030303] shadow-lg shadow-black/25 transition-opacity hover:opacity-90"
               >
-                Decouvrir la collection
+                {content.ctaLabel}
               </Link>
             </div>
           </div>

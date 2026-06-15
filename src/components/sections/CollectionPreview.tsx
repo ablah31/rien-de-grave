@@ -1,23 +1,28 @@
 import Link from "next/link";
 import { ProductCard } from "@/components/product/ProductCard";
-import { getActiveProducts } from "@/lib/products";
+import type { HomeContent } from "@/lib/content";
+import type { Product } from "@/types/product";
 
-export function CollectionPreview() {
-  const items = getActiveProducts().slice(0, 3);
+interface CollectionPreviewProps {
+  products: Product[];
+  content: HomeContent;
+}
+
+export function CollectionPreview({ products, content }: CollectionPreviewProps) {
+  const items = products.slice(0, 3);
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-16 md:space-y-10 md:px-8 md:py-24">
       <div className="home-reveal flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div className="space-y-3">
           <p className="text-[10px] uppercase tracking-[0.22em] text-brand-gray md:text-xs">
-            Les pieces
+            {content.collectionPreviewEyebrow}
           </p>
           <h2 className="font-serif text-4xl leading-none md:text-5xl">
-            Trois chapitres pour entrer dans l&apos;univers.
+            {content.collectionPreviewTitle}
           </h2>
           <p className="max-w-xl text-sm leading-6 text-brand-cream/68">
-            Chaque fiche produit prolonge le recit: visuel, citation, coupe, matiere et
-            details d&apos;atelier.
+            {content.collectionPreviewText}
           </p>
         </div>
         <Link

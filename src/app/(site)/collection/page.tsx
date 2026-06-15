@@ -1,8 +1,11 @@
 import { ProductCard } from "@/components/product/ProductCard";
-import { collectionTitle, getActiveProducts } from "@/lib/products";
+import { getActiveProducts, getCollectionTitle } from "@/lib/products";
 
-export default function CollectionPage() {
-  const products = getActiveProducts();
+export default async function CollectionPage() {
+  const [products, collectionTitle] = await Promise.all([
+    getActiveProducts(),
+    getCollectionTitle(),
+  ]);
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-8 md:space-y-10 md:px-8 md:py-16">

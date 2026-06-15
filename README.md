@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RIEN DE GRAVE
 
-## Getting Started
+Site e-commerce Next.js pour la marque RIEN DE GRAVE, avec Payload CMS, Stripe et deploiement Vercel.
 
-First, run the development server:
+## Demarrage local
+
+1. Copier `.env.example` vers `.env.local` et renseigner les variables.
+2. Connecter une base Postgres (Neon recommande) via `POSTGRES_URL`.
+3. Lancer le serveur :
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Ouvrir `http://localhost:3000/admin` pour creer le premier utilisateur admin.
+5. Peupler le contenu initial :
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run seed
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Sans base configuree, le storefront utilise les donnees de fallback dans `src/lib/products-fallback.ts`.
 
-## Learn More
+## Payload CMS
 
-To learn more about Next.js, take a look at the following resources:
+- Admin : `/admin`
+- Collections : `products`, `media`, `orders`, `archives`
+- Globals : `home`, `manifesto`, `site-settings`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Commandes utiles :
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run generate:types
+npm run generate:importmap
+npm run seed
+```
 
-## Deploy on Vercel
+## Deploiement Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Deployer le repo sur [Vercel](https://vercel.com).
+2. Ajouter les integrations **Neon** et **Vercel Blob** depuis le dashboard Vercel (voir [Payload Website Starter](https://vercel.com/templates/cms/payload-website-starter)).
+3. Definir les secrets :
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```env
+POSTGRES_URL=
+BLOB_READ_WRITE_TOKEN=
+PAYLOAD_SECRET=
+CRON_SECRET=
+PREVIEW_SECRET=
+NEXT_PUBLIC_SITE_URL=
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+```
+
+4. Le build execute `payload migrate && next build`.
+5. Apres le premier deploy : creer l'admin sur `/admin`, puis lancer `npm run seed` en local pointe vers la base prod ou via script.
+
+## Stripe
+
+- Checkout : `POST /api/checkout`
+- Webhook : `POST /api/webhooks/stripe` (enregistre les commandes dans Payload)

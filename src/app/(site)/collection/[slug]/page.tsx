@@ -8,13 +8,14 @@ interface ProductPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export function generateStaticParams() {
-  return getActiveProducts().map((product) => ({ slug: product.slug }));
+export async function generateStaticParams() {
+  const products = await getActiveProducts();
+  return products.map((product) => ({ slug: product.slug }));
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();

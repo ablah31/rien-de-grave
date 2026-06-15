@@ -27,30 +27,32 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Panier vide." }, { status: 400 });
     }
 
-    const lineItems = body.items
-      .map((item) => {
-        if (!validateSize(item.size)) {
-          return null;
-        }
+    const lineItems = (
+      await Promise.all(
+        body.items.map(async (item) => {
+          if (!validateSize(item.size)) {
+            return null;
+          }
 
-        const product = getProductBySlug(item.slug);
-        if (!product) {
-          return null;
-        }
+          const product = await getProductBySlug(item.slug);
+          if (!product) {
+            return null;
+          }
 
-        return {
-          quantity: item.quantity,
-          price_data: {
-            currency: "eur",
-            product_data: {
-              name: `${product.chapterNumber} - ${product.name}`,
-              description: `${product.subtitle} - Taille ${item.size}`,
+          return {
+            quantity: item.quantity,
+            price_data: {
+              currency: "eur",
+              product_data: {
+                name: `${product.chapterNumber} - ${product.name}`,
+                description: `${product.subtitle} - Taille ${item.size}`,
+              },
+              unit_amount: Math.round(product.price * 100),
             },
-            unit_amount: Math.round(product.price * 100),
-          },
-        };
-      })
-      .filter((item) => item !== null);
+          };
+        }),
+      )
+    ).filter((item) => item !== null);
 
     if (lineItems.length === 0) {
       return NextResponse.json({ error: "Aucun article valide." }, { status: 400 });

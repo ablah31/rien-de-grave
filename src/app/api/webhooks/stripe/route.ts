@@ -1,8 +1,8 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
+import { getPayloadClient } from "@/lib/payload";
 import { getStripeServerClient } from "@/lib/stripe";
-import { getSupabaseServerClient } from "@/lib/supabase";
 
 export async function POST(request: Request) {
   const stripe = getStripeServerClient();
@@ -17,12 +17,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Signature manquante." }, { status: 400 });
   }
 
-  const payload = await request.text();
+  const payloadBody = await request.text();
 
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(payload, signature, webhookSecret);
+    event = stripe.webhooks.constructEvent(payloadBody, signature, webhookSecret);
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "Signature invalide." }, { status: 400 });
@@ -30,15 +30,21 @@ export async function POST(request: Request) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
-    const supabase = getSupabaseServerClient();
 
-    if (supabase) {
-      await supabase.from("orders").upsert({
-        stripe_session_id: session.id,
-        customer_email: session.customer_details?.email ?? null,
-        status: session.payment_status,
-        amount_total: session.amount_total ?? 0,
+    try {
+      const payload = await getPayloadClient();
+      await payload.create({
+        collection: "orders",
+        data: {
+          stripeSessionId: session.id,
+          customerEmail: session.customer_details?.email ?? undefined,
+          status: session.payment_status,
+          amountTotal: session.amount_total ?? 0,
+          lineItems: session.line_items?.data ?? [],
+        },
       });
+    } catch (error) {
+      console.error("Erreur enregistrement commande Payload:", error);
     }
   }
 
