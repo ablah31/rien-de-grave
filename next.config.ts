@@ -6,6 +6,12 @@ const nextConfig: NextConfig = {
     // Evite 11 connexions Neon simultanees pendant le build.
     staticGenerationMaxConcurrency: 1,
   },
+  // Force l'inclusion des binaires natifs de sharp (libvips) dans les
+  // fonctions serverless Vercel. Sans cela, Payload echoue a s'initialiser
+  // au runtime (ERR_DLOPEN_FAILED: libvips-cpp.so...).
+  outputFileTracingIncludes: {
+    "/*": ["node_modules/sharp/**/*", "node_modules/@img/**/*"],
+  },
   images: {
     remotePatterns: [
       {
